@@ -6,6 +6,7 @@ from posts.models import Comment, Follow, Group, Post
 
 
 SELF_FOLLOW_ERROR = 'Нельзя подписаться на самого себя!'
+FOLLOW_NOT_UNIQUE = 'Подписаться можно только один раз!'
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -15,8 +16,10 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True,
-                                          slug_field='username')
+    author = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
 
     class Meta:
         fields = '__all__'
@@ -24,8 +27,10 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True,
-                                          slug_field='username')
+    author = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
 
     class Meta:
         fields = '__all__'
@@ -55,6 +60,7 @@ class FollowSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Follow.objects.all(),
-                fields=('user', 'following')
+                fields=('user', 'following'),
+                message=FOLLOW_NOT_UNIQUE
             )
         ]
