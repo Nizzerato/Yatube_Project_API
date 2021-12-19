@@ -6,8 +6,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from posts.models import Group, Post
 from .permissions import IsOwnerOrReadOnly
-from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
-                          PostSerializer)
+from .serializers import (
+    CommentSerializer, FollowSerializer, GroupSerializer, PostSerializer
+)
 
 
 class CreateListViewSet(
